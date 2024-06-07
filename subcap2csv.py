@@ -1,5 +1,7 @@
 import csv
 import codecs
+import sys
+import os
 
 def read_subcaps(input_file, output_csv):
     csv_rows = []
@@ -29,11 +31,12 @@ def read_subcaps(input_file, output_csv):
             writer.writerow(['Shot Code', 'Start Timecode', 'End Timecode'])
             writer.writerows(csv_rows)
         print(f"CSV file '{output_csv}' created successfully!")
-        # Process the content as needed
 
 
-# Example usage
-input_text_file = 'durations.txt'
-output_csv_file = 'subtitles.csv'
-# text_to_csv_from_file(input_text_file, output_csv_file)
-read_subcaps(input_text_file, output_csv_file)
+if __name__ == '__main__':
+    if len(sys.argv)>=2:
+        input_file_path = str(sys.argv[1])#try to pass first argument as the file path
+    else:
+        input_file_path = input("Enter the path to the subcap txt file")
+    if os.path.exists(input_file_path) and input_file_path.endswith('.txt'):
+            read_subcaps(input_file_path, input_file_path.replace('.txt','.csv'))
